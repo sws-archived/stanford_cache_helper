@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Stanford Cache Helper
+ *
+ * The Stanford Cache Helper assists when the standard Drupal caching may be incomplete.
+ */
+
+/**
+ * Implements hook_block_view_alter().
+ */
+function stanford_cache_helper_block_view_alter(&$data, $block) {
+
+  // If the menu block has no content, it might be due to caching.
+  $delta = 'stanford_jsa_layouts-1';
+  if ($block->delta == $delta) {
+    if (!isset($data['content'])) {
+      watchdog('stanford_cache_helper',
+        'Menu block %menu is missing content. Subject is: %subject',
+        array('%menu' => $delta, '%subject'=>$data['subject']),
+        WATCHDOG_DEBUG);
+      $block = module_invoke('menu_block', 'block_view', $delta);
+    }
+  }
+}
