@@ -6,14 +6,6 @@ Maintainers: [cjwest](https://github.com/cjwest), [boznik](https://github.com/bo
 
 The Stanford Cache Helper assists when the standard Drupal caching may be incomplete.
 
-
-
-Sub Modules
----
-
-**[Stanford cache_helper Sub Module](https://github.com/SU-SWS/stanford_cache_helper)**
-This module provides the Stanford Person entity reference field. By default an instance of this field is created on Stanford Publications but it may be added to other content types.
-
 Installation
 ---
 
