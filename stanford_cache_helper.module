@@ -24,3 +24,22 @@ function stanford_cache_helper_block_view_alter(&$data, $block) {
     }
   }
 }
+
+/**
+ * Implements hook_page_alter(&$page).
+ */
+function stanford_cache_helper_page_alter(&$page) {
+
+  // If the page doesn't have a sidebar and it is displaying a node, it might
+  // need the cache cleared.
+  if (!isset($page['sidebar_first'])) {
+    if (isset ($page['content']['system_main']['nodes'])) {
+      $key = (key($page['content']['system_main']['nodes']));
+      watchdog('stanford_cache_helper',
+        'First sidebar is missing. Page is: node/%key',
+        array('%key' => $key),
+        WATCHDOG_DEBUG);
+      cache_clear_all();
+    }
+  }
+}
