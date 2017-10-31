@@ -32,6 +32,8 @@ function stanford_cache_helper_page_alter(&$page) {
 
   // If the page doesn't have a sidebar and it is displaying a node, it might
   // need the cache cleared.
+  //
+  // This requires refreshing the page twice for the page to render properly.
   if (!isset($page['sidebar_first'])) {
     if (isset ($page['content']['system_main']['nodes'])) {
       $key = (key($page['content']['system_main']['nodes']));
@@ -39,7 +41,7 @@ function stanford_cache_helper_page_alter(&$page) {
         'First sidebar is missing. Page is: node/%key',
         array('%key' => $key),
         WATCHDOG_DEBUG);
-      cache_clear_all();
+      drupal_flush_all_caches();
     }
   }
 }
