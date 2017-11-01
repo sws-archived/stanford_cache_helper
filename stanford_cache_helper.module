@@ -37,9 +37,9 @@ function stanford_cache_helper_page_alter(&$page) {
   if (!isset($page['sidebar_first'])) {
     if (isset ($page['content']['system_main']['nodes'])) {
       $key = (key($page['content']['system_main']['nodes']));
-      $white_list = array(628, 148);
+      $settings = stanford_cache_helper_get_settings();
 
-      if (!in_array($key, $white_list)) {
+      if (!in_array($key, $settings['whitelist'])) {
         watchdog('stanford_cache_helper',
           'First sidebar is missing. Page is: node/%key',
           array('%key' => $key),
@@ -50,8 +50,27 @@ function stanford_cache_helper_page_alter(&$page) {
   }
 }
 
-/*
- * Whitelist:
- * node/628 - Information Technology
- * node/148 - Home page
+/**
+ * Default settings wrapper for variable_get
+ * @return array
+ *   Persistent settings for this module.
+ *
  */
+function stanford_cache_helper_get_settings() {
+  $default_settings = array(
+
+    // These are the nodes that don't have first sidebars.
+    // node/628 - Information Technology
+    // node/148 - Home page
+    // node/1225 - Connect-links
+    // node/632 - Job Aids Too
+    // node/80  - page not found
+    // node/164 - Resources Overview
+    // node/90  - Resources
+    // node/78  - Programs
+    'whitelist' => array(628, 148, 1225, 632, 80, 164, 90, 78),
+  );
+  $settings = variable_get('stanford_cache_helper_settings', $default_settings );
+
+  return $settings;
+}

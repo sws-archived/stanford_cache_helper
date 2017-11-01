@@ -27,10 +27,10 @@ function stanford_cache_helper_install() {
  * Implements hook_enable().
  */
 function stanford_cache_helper_enable() {
-  /*
-   *mymodule_cache_rebuild();
-   */
-  /* Your code here */
+
+  // Initialize settings
+  $settings = stanford_cache_helper_get_settings();
+  variable_set('stanford_cache_helper_settings', $settings);
 }
 
 /**
@@ -47,7 +47,5 @@ function stanford_cache_helper_disable() {
  * Implements hook_uninstall().
  */
 function stanford_cache_helper_uninstall() {
-  /*
-   *variable_del('upload_file_types');
-   */
+  variable_del('stanford_cache_helper_settings');
 }
