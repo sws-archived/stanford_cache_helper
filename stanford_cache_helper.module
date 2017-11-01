@@ -41,7 +41,8 @@ function stanford_cache_helper_page_alter(&$page) {
         'First sidebar is missing. Page is: node/%key',
         array('%key' => $key),
         WATCHDOG_DEBUG);
-      drupal_flush_all_caches();
+      //drupal_flush_all_caches();
+      $block = module_invoke('menu_block', 'block_view', 'stanford_jsa_layouts-1');
     }
   }
 }
